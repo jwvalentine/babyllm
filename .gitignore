@@ -484,3 +484,8 @@ $RECYCLE.BIN/
 *.swp
 BabyLLM/obj/Debug/*
 BabyLLM.Tests/bin/Debug/*
+BabyLLM/obj/Debug/net8.0/BabyLLM.AssemblyInfoInputs.cache
+BabyLLM.Tests/bin/Debug/net8.0/.msCoverageSourceRootsMapping_BabyLLM.Tests
+BabyLLM.Tests/obj/Debug/net8.0/BabyLLM.Tests.AssemblyInfo.cs
+BabyLLM.Tests/obj/Debug/net8.0/BabyLLM.Tests.AssemblyInfoInputs.cache
+BabyLLM/obj/Debug/net8.0/BabyLLM.AssemblyInfo.cs

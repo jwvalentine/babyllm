@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BabyLLM")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d6bf6bfd8a56bc9ff0197635394b87f507c74fbc")]
 [assembly: System.Reflection.AssemblyProductAttribute("BabyLLM")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BabyLLM")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

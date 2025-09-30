@@ -57,7 +57,10 @@ app.UseSwagger();    // Serves the OpenAPI specification
 app.UseSwaggerUI();  // Provides the Swagger UI interface
 
 // Create HTTP client for external API calls (Ollama, ChromaDB)
-var http = new HttpClient();
+var http = new HttpClient()
+{
+    Timeout = TimeSpan.FromSeconds(600)
+};
 
 // Cache for ChromaDB collection IDs to avoid repeated API calls
 // Maps collection name to collection ID for efficient lookups
@@ -286,7 +289,7 @@ async Task<string> GenerateAsync(string prompt)
 /// <param name="chunkSize">Maximum number of words per chunk (default: 800)</param>
 /// <param name="overlap">Number of words to overlap between chunks (default: 160)</param>
 /// <returns>List of text chunks with overlap</returns>
-static List<string> Chunk(string text, int chunkSize = 800, int overlap = 160)
+static List<string> Chunk(string text, int chunkSize = 400, int overlap = 80)
 {
     // Split text into words, removing empty entries
     var words = text.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
@@ -323,7 +326,7 @@ static string BuildPrompt(string question, IEnumerable<string> ctxs)
     // 2. Admit when it doesn't know something
     // 3. Answer the specific question asked
     return
-$@"You are a helpful assistant. Answer ONLY using the provided context.
+$@"Answer ONLY using the provided context.
 If the answer is not in the context, say you don't know.
 
 Context:
