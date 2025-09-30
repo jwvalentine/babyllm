@@ -286,10 +286,10 @@ async Task<string> GenerateAsync(string prompt)
 /// Overlap ensures important context isn't lost at chunk boundaries
 /// </summary>
 /// <param name="text">The text to split into chunks</param>
-/// <param name="chunkSize">Maximum number of words per chunk (default: 800)</param>
-/// <param name="overlap">Number of words to overlap between chunks (default: 160)</param>
+/// <param name="chunkSize">Maximum number of words per chunk (default: 512)</param>
+/// <param name="overlap">Number of words to overlap between chunks (default: 64)</param>
 /// <returns>List of text chunks with overlap</returns>
-static List<string> Chunk(string text, int chunkSize = 400, int overlap = 80)
+static List<string> Chunk(string text, int chunkSize = 512, int overlap = 64)
 {
     // Split text into words, removing empty entries
     var words = text.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);

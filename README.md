@@ -48,7 +48,7 @@
                                [Retriever] ──► [Prompt Builder] ──► [Ollama LLM] ──► Answer + Citations
 ```
 
-- **Chunker**: splits docs (e.g., 1000 tokens, 200 overlap).
+- **Chunker**: splits docs into overlapping word-based chunks (512 words per chunk, 64 words overlap by default).
 - **Embeddings**: Hugging Face model (`all-MiniLM-L6-v2`) runs locally on CPU/GPU for text-to-vector conversion.
 - **Store**: ChromaDB persists vectors (embedded or server mode).
 - **Generation**: Retrieved chunks → prompt → local Ollama for grounded answers.
