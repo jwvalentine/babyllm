@@ -2,7 +2,7 @@
 
 **BabyLLM** is a lightweight, locally-hosted Retrieval-Augmented Generation (RAG) service for teams who want private, on‑prem AI. It lets you ingest internal knowledge (Markdown, text, PDFs, Word/Excel, CSVs, etc.), index it with **Hugging Face embeddings** (local‑only), store vectors in **ChromaDB**, and ask questions via a simple REST API. Answers include citations to the most relevant source chunks.
 
-> **Project context:** BabyLLM is part of the broader **Ollama** project and intentionally uses **Hugging Face for embeddings only** (no Ollama embeddings). Inference is handled by **Ollama**. The system is designed to run **entirely offline** on your own hardware.
+> **Project context:** BabyLLM uses the broader **Ollama** project and intentionally uses **Hugging Face for embeddings only** (no Ollama embeddings). Inference is handled by **Ollama**. The system is designed to run **entirely offline** on your own hardware.
 
 ---
 
