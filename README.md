@@ -14,7 +14,7 @@
 - [API](#-api)
 - [Deployment Options](#-deployment-options)
   - [Docker Compose (recommended)](#docker-compose-recommended)
-  - [Bare-Metal (Python)](#bare-metal-python)
+  - [Bare-Metal (.NET)](#bare-metal-net)
 - [Configuration](#-configuration)
   - [.env.example](#envexample)
 - [Ingestion Notes (PDF/OCR)](#ingestion-notes-pdfocr)
@@ -188,11 +188,11 @@ docker exec -it $(docker ps -qf "name=ollama") ollama pull mistral
 
 ---
 
-### Bare‑Metal (Python)
+### Bare‑Metal (.NET)
 
 ```bash
 # System deps (example: Ubuntu)
-sudo apt-get update && sudo apt-get install -y python3 python3-venv python3-pip
+sudo apt-get update && sudo apt-get install -y dotnet-sdk-8.0
 
 # Project
 git clone https://github.com/your-org/babyllm.git
@@ -208,17 +208,15 @@ git clone https://huggingface.co/onnx-models/all-MiniLM-L6-v2-onnx models/all-Mi
 # Windows (PowerShell):
 # git clone https://huggingface.co/onnx-models/all-MiniLM-L6-v2-onnx models/all-MiniLM-L6-v2
 
-python3 -m venv .venv
-source .venv/bin/activate
-pip install --upgrade pip
-pip install -r requirements.txt
+# Restore dependencies
+dotnet restore
 
-# Configure environment
-cp .env.example .env
-# Edit .env to choose your HF embedding model and Ollama model
+# Configure environment (copy and edit configuration)
+cp Config/appsettings.json Config/appsettings.Development.json
+# Edit appsettings.Development.json for your environment
 
-# Run API (FastAPI/Uvicorn)
-uvicorn app.main:app --host 0.0.0.0 --port 7209
+# Run the API
+dotnet run --project BabyLLM
 ```
 
 Optional: run **Ollama** locally:
@@ -336,16 +334,27 @@ EASYOCR_LANGS=en
 ## 📁 Repo Structure
 
 ```
-babyllm/
-├─ app/
-│  ├─ main.py              # FastAPI app (routes: /api/ingest, /api/ask)
-│  ├─ ingest.py            # Chunking, file parsing, optional OCR
-│  ├─ embeddings.py        # HF embedding pipeline
-│  ├─ store.py             # ChromaDB (embedded/server client)
-│  └─ rag.py               # Retriever + prompt builder
-├─ requirements.txt
-├─ docker-compose.yml
-├─ Dockerfile
-├─ .env.example
-└─ README.md
+BabyLLM/
+├─ BabyLLM/                # Main .NET API project
+│  ├─ Program.cs           # Main application entry point with REST endpoints
+│  ├─ HuggingFaceEmbedder.cs  # Text embedding service using HuggingFace models
+│  ├─ FakeRag.cs           # Mock RAG implementation for testing
+│  ├─ BabyLLM.csproj       # .NET project file
+│  └─ Properties/          # Project properties
+├─ BabyLLM.Tests/          # Unit tests
+│  ├─ ApiTests.cs          # API endpoint tests
+│  ├─ TestAppFactory.cs    # Test application factory
+│  └─ BabyLLM.Tests.csproj # Test project file
+├─ Config/                 # Configuration files
+│  ├─ appsettings.json     # Base application settings
+│  └─ appsettings.Development.json  # Development environment settings
+├─ models/                 # ML models directory
+│  └─ all-MiniLM-L6-v2/   # HuggingFace embedding model (downloaded separately)
+├─ tokenizer_server.py     # Python tokenizer service
+├─ docker-compose.yml      # Docker services orchestration
+├─ Dockerfile              # Main .NET application container
+├─ Tokenizer.Dockerfile    # Python tokenizer service container
+├─ BabyLLM.sln            # Visual Studio solution file
+├─ .gitignore             # Git ignore patterns
+└─ README.md              # This file
 ```
