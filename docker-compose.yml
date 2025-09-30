@@ -19,6 +19,10 @@ services:
     depends_on:
       hf-tokenizer:
         condition: service_healthy
+      ollama:
+        condition: service_started
+      chroma:
+        condition: service_started
 
   ollama:
     image: ollama/ollama:latest
@@ -39,6 +43,8 @@ services:
     volumes:
       - chroma:/chroma/.chroma/index
     restart: unless-stopped
+    command: >
+      sh -c "pip install 'numpy<2' && uvicorn chromadb.app:app --host 0.0.0.0 --port 8000"
 
   hf-tokenizer:
     build:

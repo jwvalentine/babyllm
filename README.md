@@ -205,7 +205,7 @@ Optional: run **Ollama** locally:
 ```bash
 # Install Ollama from https://github.com/ollama/ollama
 ollama serve
-ollama pull mistral
+ollama pull phi3:mini
 ```
 
 ---

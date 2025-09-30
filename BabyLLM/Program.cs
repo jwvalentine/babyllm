@@ -142,8 +142,18 @@ async Task UpsertAsync(List<string> ids, List<string> docs, List<Dictionary<stri
     var collectionId = CollectionCache[COLLECTION];
 
     // Send the documents and their embeddings to ChromaDB
-    var body = new { ids, documents = docs, metadatas = metas, embeddings = embeds };
-    await http.PostAsJsonAsync($"{CHROMA}/api/v1/collections/{collectionId}/upsert", body);
+    var body = new
+    {
+    ids,
+    documents = docs,
+    metadatas = metas,
+    embeddings = embeds.Select(e => e.Select(v => (double)v).ToArray()).ToList()
+    };
+
+    var res = await http.PostAsJsonAsync($"{CHROMA}/api/v1/collections/{collectionId}/upsert", body);
+    var respText = await res.Content.ReadAsStringAsync();
+    Console.WriteLine($"Upsert response: {res.StatusCode} - {respText}");
+    res.EnsureSuccessStatusCode();
 }
 
 /// <summary>
