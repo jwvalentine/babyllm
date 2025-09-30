@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "uBNX1YhEKLurkXI9ESGhNUB381nh6jx5qH7HqcJ2Vek=",
+  "Source": "BabyLLM",
+  "BasePath": "_content/BabyLLM",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

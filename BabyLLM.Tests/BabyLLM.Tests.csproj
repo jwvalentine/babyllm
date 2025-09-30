@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="NUnit" Version="4.2.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BabyLLM\BabyLLM.csproj" />
+  </ItemGroup>
+
+ <ItemGroup>
+  <!-- Copy config files into test output folder, preserving Config/ folder -->
+  <None Include="..\Config\appsettings*.json" Link="Config\%(Filename)%(Extension)">
+    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  </None>
+ </ItemGroup>
+
+</Project>

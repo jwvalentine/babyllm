@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+  babyllm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: babyllm
+    ports:
+      - "7209:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Production"
+      Ollama__Url: "http://ollama:11434"
+      Chroma__Url: "http://chroma:8000"
+      Chroma__Collection: "babyllm_docs"
+      Models__LLM: "phi3:mini"
+      UseFakes: "false"
+      Tokenizer__Url: "http://hf-tokenizer:8082"
+    depends_on:
+      hf-tokenizer:
+        condition: service_healthy
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    restart: unless-stopped
+
+  chroma:
+    image: chromadb/chroma:0.4.14
+    container_name: chroma
+    ports:
+      - "8000:8000"
+    environment:
+      IS_PERSISTENT: "TRUE"
+    volumes:
+      - chroma:/chroma/.chroma/index
+    restart: unless-stopped
+
+  hf-tokenizer:
+    build:
+      context: .
+      dockerfile: Tokenizer.Dockerfile
+    container_name: hf-tokenizer
+    volumes:
+      - ./models:/app/models
+      - ./tokenizer_server.py:/app/tokenizer_server.py
+    ports:
+      - "8082:8082"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "echo '{\"text\":\"ping\"}' | curl -s -f -X POST http://localhost:8082/tokenize -H 'Content-Type: application/json' -d @- > /dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  ollama:
+  chroma:
