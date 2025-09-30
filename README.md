@@ -49,7 +49,7 @@
 ```
 
 - **Chunker**: splits docs (e.g., 1000 tokens, 200 overlap).
-- **Embeddings**: Hugging Face model runs locally on CPU/GPU.
+- **Embeddings**: Hugging Face model (`all-MiniLM-L6-v2`) runs locally on CPU/GPU for text-to-vector conversion.
 - **Store**: ChromaDB persists vectors (embedded or server mode).
 - **Generation**: Retrieved chunks → prompt → local Ollama for grounded answers.
 
@@ -165,13 +165,23 @@ volumes:
 
 Then run:
 ```bash
-# 1) Start everything
+# 1) Download the embedding model (one-time setup)
+# Linux/macOS:
+git clone https://huggingface.co/onnx-models/all-MiniLM-L6-v2-onnx models/all-MiniLM-L6-v2
+
+# Windows (Command Prompt):
+# git clone https://huggingface.co/onnx-models/all-MiniLM-L6-v2-onnx models\all-MiniLM-L6-v2
+
+# Windows (PowerShell):
+# git clone https://huggingface.co/onnx-models/all-MiniLM-L6-v2-onnx models/all-MiniLM-L6-v2
+
+# 2) Start everything
 docker compose up -d --build
 
-# 2) (One-time) Pull an Ollama model you want to use:
+# 3) (One-time) Pull an Ollama model you want to use:
 docker exec -it $(docker ps -qf "name=ollama") ollama pull mistral
 
-# 3) Ingest and ask (see Quickstart)
+# 4) Ingest and ask (see Quickstart)
 ```
 
 > **Embedded vs Server Chroma:** If you prefer embedded Chroma (no separate container), omit the `chroma` service and set `CHROMA_PERSIST_DIR` in `.env`. For server mode, set `CHROMA_HOST=http://chroma:8000`.
@@ -187,6 +197,16 @@ sudo apt-get update && sudo apt-get install -y python3 python3-venv python3-pip
 # Project
 git clone https://github.com/your-org/babyllm.git
 cd babyllm
+
+# Download the embedding model
+# Linux/macOS:
+git clone https://huggingface.co/onnx-models/all-MiniLM-L6-v2-onnx models/all-MiniLM-L6-v2
+
+# Windows (Command Prompt):
+# git clone https://huggingface.co/onnx-models/all-MiniLM-L6-v2-onnx models\all-MiniLM-L6-v2
+
+# Windows (PowerShell):
+# git clone https://huggingface.co/onnx-models/all-MiniLM-L6-v2-onnx models/all-MiniLM-L6-v2
 
 python3 -m venv .venv
 source .venv/bin/activate
