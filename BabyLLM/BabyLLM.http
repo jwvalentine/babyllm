@@ -1,6 +1,0 @@
-@BabyLLM_HostAddress = http://localhost:5202
-
-GET {{BabyLLM_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
