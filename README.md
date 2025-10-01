@@ -179,7 +179,7 @@ git clone https://huggingface.co/onnx-models/all-MiniLM-L6-v2-onnx models/all-Mi
 docker compose up -d --build
 
 # 3) (One-time) Pull an Ollama model you want to use:
-docker exec -it $(docker ps -qf "name=ollama") ollama pull mistral
+docker exec -it $(docker ps -qf "name=ollama") ollama pull phi3:mini
 
 # 4) Ingest and ask (see Quickstart)
 ```
