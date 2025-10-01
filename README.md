@@ -30,7 +30,7 @@
 
 - **Document ingestion API** for `.md`, `.txt`, `.pdf`, `.docx`, `.xlsx`, `.csv`, and more.
 - **Local embeddings** with Hugging Face (e.g., `sentence-transformers/all-MiniLM-L6-v2`), stored in **ChromaDB**.
-- **Semantic retrieval** + **context-aware generation** via a local Ollama model (e.g., `mistral`, `llama3`, etc.).
+- **Semantic retrieval** + **context-aware generation** via a local Ollama model (e.g., `phi3:mini`, `llama3`, etc.).
 - **Citations**: responses include the file and chunk used to answer.
 - **Stateless API** with a **persistent vector store** (on disk or Chroma server).
 - **CPU‑first**; optional GPU acceleration when available.
@@ -241,7 +241,7 @@ BabyLLM is configured via environment variables. Common knobs:
   - Server: `CHROMA_HOST=http://chroma:8000`
 - **Ollama LLM**
   - `OLLAMA_HOST=http://ollama:11434`
-  - `OLLAMA_MODEL=mistral` (or `llama3`, etc.)
+  - `OLLAMA_MODEL=phi3:mini` (or `llama3`, etc.)
   - `MAX_CONTEXT_TOKENS=4096` (depends on model)
 - **API**
   - `APP_PORT=7209`
@@ -271,7 +271,7 @@ CHROMA_PERSIST_DIR=/data/chroma
 
 # ── Ollama (LLM inference) ────────────────────────────────────────────────────
 OLLAMA_HOST=http://ollama:11434
-OLLAMA_MODEL=mistral
+OLLAMA_MODEL=phi3:mini
 MAX_CONTEXT_TOKENS=4096
 
 # ── OCR (optional; PDFs with images) ──────────────────────────────────────────
@@ -304,7 +304,7 @@ EASYOCR_LANGS=en
 
 ## 🧰 Troubleshooting
 
-- **No model loaded / slow first token**: ensure `ollama serve` is running and you’ve pulled the model (`ollama pull mistral`). First response can be slower due to model load/warmup.
+- **No model loaded / slow first token**: ensure `ollama serve` is running and you’ve pulled the model (`ollama pull phi3:mini`). First response can be slower due to model load/warmup.
 - **Empty answers**: confirm files contain text (or enable OCR for scanned PDFs). Increase `k` in `/api/ask`.
 - **Vector store not persisting**: check that `CHROMA_PERSIST_DIR` exists and is writable (embedded), or that `CHROMA_HOST` is reachable (server).
 - **CORS errors**: set `ALLOWED_ORIGINS=*` (or your domain) when calling from a browser app.
